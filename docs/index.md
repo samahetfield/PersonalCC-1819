@@ -1,6 +1,6 @@
 # Introducción.
 
-Realizar un bot de telegram que nos permita consultar las fechsa de estreno de los capítulos de nuestras series favoritas, de forma que el bot nos pueda avisar cuándo se estrena un capítulo y poder llevar al día nuestra serie. Para realizar este bot utilizaremos la API TvDB, que nos dará la información de las series que consultaremos.
+Realizar un bot de telegram que nos permita consultar las fechsa de estreno de los capítulos de nuestras series favoritas, de forma que el bot nos pueda avisar cuándo se estrena un capítulo y poder llevar al día nuestra serie. Para realizar este bot utilizaremos la [API TvDB](https://www.thetvdb.com/), que nos dará la información de las series que consultaremos.
 
 ## Descripción del problema.
 
@@ -22,4 +22,4 @@ Información del usuario: Con este microservicio almacenaremos las series favori
 Este software se encontrará sujeto a la licencia GNU General Public License v3.0
 
 # Descripción de los milestones del proyecto
-Enlace hacia los milestones del proyecto.
+Enlace hacia los [milestones](https://github.com/samahetfield/PersonalCC-1819/milestones) del proyecto.
