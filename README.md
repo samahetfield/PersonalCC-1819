@@ -1,6 +1,6 @@
 # Página del proyecto de la asignatura Cloud Computing
 
-La [página] (https://samahetfield.github.io/PersonalCC-1819/) contendrá el proyecto desarrollado en la asignatura Cloud Computing.
+La [página](https://samahetfield.github.io/PersonalCC-1819/) contendrá el proyecto desarrollado en la asignatura Cloud Computing.
 
 # Descripción del proyecto
 
