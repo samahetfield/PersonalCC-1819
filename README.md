@@ -2,9 +2,7 @@
 
 La página contendrá el proyecto desarrollado en la asignatura Cloud Computing.
 
-En la [Página web del proyecto](https://samahetfield.github.io/PersonalCC-1819/) se encuentra la descripción del proyecto.
-
-#Descripción del proyecto
+# Descripción del proyecto
 
 # Introducción.
 
@@ -20,15 +18,17 @@ Realizar un bot de telegram que nos avise y nos recuerde cuándo se lanzan los n
 
 # Arquitectura
 
-Para realizar este proyecto utilizaremos una arquitectura basada en microservicios, la cual deberá tener mínimo 2 de ellos, que serán:
+Para realizar este proyecto utilizaremos una arquitectura basada en microservicios, la cual deberá tener mínimo los siguientes:
 
-Consutar información de series: Este microservicio se encargará de extraer la información de las series consultadas haciendo uso de la API TvDB.
+- Microservicio 1: Este microservicio se encargará de leer los datos de la API TvDB
 
-Información del usuario: Con este microservicio almacenaremos las series favoritas del usuario para poder saber y mostrar las alertas únicamente de las series que tenga almacenadas.
+- Microservicio 2: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MongoDB.
+
+- Microservicio 3: Microservicio que tendrá el Bot de Telegram.
 
 # Licencia
 Este software se encontrará sujeto a la licencia GNU General Public License v3.0
 
 # Descripción de los milestones del proyecto
-Enlace hacia los [milestones](https://github.com/samahetfield/PersonalCC-1819/milestones) del proyecto.
 
+Enlace hacia los [milestones](https://github.com/samahetfield/PersonalCC-1819/milestones) del proyecto.
