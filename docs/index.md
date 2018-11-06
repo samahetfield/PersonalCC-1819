@@ -22,6 +22,10 @@ Para realizar este proyecto utilizaremos una arquitectura basada en microservici
 
 - Microservicio 3: Microservicio que tendrá el Bot de Telegram.
 
+# PaaS
+Se ha seleccionado Heroku para el despliegue de nuestra aplicación. Hemos seleccionado esta plataforma frente a otras gracias a estar más familiarizados con ella ya que se ha trabajado con ella en los ejercicios del tema 3, así como por su suscripción gratuita.
+Por otro lado, es sencillo desplegar nuestra aplicación en esta plataforma.
+
 # Licencia
 Este software se encontrará sujeto a la licencia GNU General Public License v3.0
 
