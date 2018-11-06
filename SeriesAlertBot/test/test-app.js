@@ -1,5 +1,5 @@
 var request = require('supertest'),
-				app = require('../app.js');
+				app = require('../bot.js');
 
 				describe( "GET nodebot", function() {
 					it('should create', function (done) {
