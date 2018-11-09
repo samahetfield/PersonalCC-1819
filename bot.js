@@ -83,8 +83,13 @@ bot.onText(/^\/deleteserie (.+)/, (msg, match) => {
 	var chatId = msg.chat.id;
 	var username = msg.from.username;
 	var serie_add = match[1];
-	sc.deleteserie(serie_add);
-	bot.sendMessage(chatId, "He eliminado " + serie_add + " de tu lista de favoritos");
+	var index = sc.deleteserie(serie_add);
+	if(index == -1){
+			bot.sendMessage(chatId, "No he econtrado la serie " + serie_add + " en tu lista de favoritos");
+	}
+	else{
+			bot.sendMessage(chatId, "He eliminado " + serie_add + " de tu lista de favoritos");
+	}
 });
 
 module.exports = app

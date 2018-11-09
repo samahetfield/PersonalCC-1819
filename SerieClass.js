@@ -15,6 +15,7 @@ SerieClass.prototype.deleteserie = function(serie){
 	if(index > -1){
 		this.favourites.splice(0, 1);
 	}
+	return index;
 }
 
 module.exports = SerieClass;
