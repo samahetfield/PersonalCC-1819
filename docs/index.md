@@ -47,6 +47,33 @@ Actualmente tiene las funcionalidades muy limitadas, pero nos permite ejecutar l
 - **/showfavourites**: Nos mostrará una lista de nuestras series favoritas.
 - **/seeactors** param1: Nos mostrará una lista de actores de la serie indicada. (Actualmente no se encuentra en funcionamiento ya que no hemos accedido a la API aún).
 
+# Infraestructura
+
+Se ha decidido usar Node.js como lenguaje para nuestra aplicación que se va a encontrar desplegada en Heroku.
+Al haber seleccionado este lenguaje, tendremos un archivo llamado ``` package.json ``` en el que encontraremos las dependencias necesarias para nuestra aplicación.
+
+	"dependencies": {
+    	"body-parser": "^1.18.3",
+    	"cookie-parser": "^1.4.3",
+    	"debug": "^4.1.0",
+    	"express": "^4.16.4",
+    	"jade": "~1.3.0",
+    	"mocha": "^5.2.0",
+    	"morgan": "~1.0.0",
+    	"node-telegram-bot-api": "^0.30.0",
+    	"static-favicon": "~1.0.0",
+    	"supertest": "^3.3.0"
+	}
+
+Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **node-telegram-bot-api** necesaria para el bot de telegram, así como otras que podemos ver como pueden ser **supertest** utilizada para los test, **mocha** para correr los test programados o **express** el microframework de Node.	
+
+Finalmente, como vamos a desplegar en Heroku necesitaremos un archivo llamado ```Procfile ``` que nos servirá para indicar los comandos que ejecutará el dynos.
+En nuestro caso, es sencillo y tendrá únicamente una orden.
+
+	web: node bot.js
+
+Podemos diferenciar dos partes en esta orden del [Procfile](https://devcenter.heroku.com/articles/procfile). La primera parte **web** que nos servirá para indicar que la aplicación va a correr un servidor web y la segunda parte que será el comando que el dyno debe ejecutar para lanzar la aplicación.
+
 # Despliegue en el PaaS
 Se ha seleccionado Heroku para el despliegue de nuestra aplicación. Hemos seleccionado esta plataforma frente a otras gracias a estar más familiarizados con ella ya que se ha trabajado con ella en los ejercicios del tema 3, así como por su suscripción gratuita.
 Por otro lado, es sencillo desplegar nuestra aplicación en esta plataforma.
