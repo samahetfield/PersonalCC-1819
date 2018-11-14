@@ -6,6 +6,10 @@
     "test": "mocha --exit",
     "start": "node bot.js"
   },
+  "engines": {
+    "node": "8.10.0",
+    "npm": "6.4.1"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",

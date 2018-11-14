@@ -7,6 +7,7 @@ var app = flicker();
 // Importamos la clase SerieClass
 const SerieClass = require('./SerieClass');
 var sc = new SerieClass();
+var port = process.env.PORT || 5000;
 
 app
 	.add({
@@ -20,7 +21,7 @@ app
 								};
 			res.send(response_get);
 		}
-	}).listen(5000);
+	}).listen(port);
 
 
 app
