@@ -53,17 +53,17 @@ Se ha decidido usar Node.js como lenguaje para nuestra aplicación que se va a e
 Al haber seleccionado este lenguaje, tendremos un archivo llamado ``` package.json ``` en el que encontraremos las dependencias necesarias para nuestra aplicación.
 
 	"dependencies": {
-    	"body-parser": "^1.18.3",
-    	"cookie-parser": "^1.4.3",
-    	"debug": "^4.1.0",
-    	"express": "^4.16.4",
-    	"jade": "~1.3.0",
-    	"mocha": "^5.2.0",
-    	"morgan": "~1.0.0",
-    	"node-telegram-bot-api": "^0.30.0",
-    	"static-favicon": "~1.0.0",
-    	"supertest": "^3.3.0"
-	}
+        "body-parser": "^1.18.3",
+        "cookie-parser": "^1.4.3",
+        "debug": "^4.1.0",
+        "flickerjs": "^2.0.7",
+        "jade": "~1.3.0",
+        "mocha": "^5.2.0",
+        "morgan": "^1.9.1",
+        "node-telegram-bot-api": "^0.30.0",
+        "static-favicon": "~1.0.0",
+        "supertest": "^3.3.0"
+    }
 
 Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **node-telegram-bot-api** necesaria para el bot de telegram, así como otras que podemos ver como pueden ser **supertest** utilizada para los test, **mocha** para correr los test programados o **express** el microframework de Node.	
 

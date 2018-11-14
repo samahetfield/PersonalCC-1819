@@ -8,14 +8,14 @@ var SerieClass = require('../SerieClass');
 					it('responds with JSON Status OK on /', function (done) {
 					request(app)
 						.get('/')
-						.expect('Content-Type', 'application/json; charset=utf-8')
+						.expect('Content-Type', 'application/json')
 						.expect(200,done);
 					});
 
 					it('responds with favourite series on /series_favoritas', function(done){
 						request(app)
 							.get('/series_favoritas')
-							.expect('Content-Type', 'application/json; charset=utf-8')
+							.expect('Content-Type', 'application/json')
 							.expect(200, done);
 					});
 

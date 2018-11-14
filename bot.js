@@ -1,49 +1,41 @@
 // Parte Web
-var express = require('express');
+var flicker = require('flickerjs');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var app = express();
+var app = flicker();
 
 // Importamos la clase SerieClass
 const SerieClass = require('./SerieClass');
 var sc = new SerieClass();
 
-app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
-
-app.get('/',
-	function(request, response){
-	var favourites_test = sc.showfavourites();
-
-	var get_response = {
-						"status": "OK",
-						"ejemplo": {
-									"ruta": "/series_favoritas",
-									"valor": {"valor": favourites_test.length}
-						}
-					};
-		response.send(get_response);
-	});	
+app
+	.add({
+		url: '/',
+		method: 'GET',
+		handler: (req, res, next) => {
+			var response_get = {"status": "OK", 
+								"ejemplo": {"ruta": "/series_favoritas",
+											"valor": {"tamaño": sc.length}
+											}
+								};
+			res.send(response_get);
+		}
+	}).listen(5000);
 
 
-app.get('/series_favoritas',
-	function(req, res){
-		var favs = sc.showfavourites();
-		var respuesta = { "size" : favs.length };
-		if( favs.length > 0 )
-			for( i = 0; i < favs.length; i++ )
-				respuesta["Serie favorita " + (i+1) ] = favs[i];
-
-		res.send(respuesta);
+app
+	.add({
+		url: '/series_favoritas',
+		method: 'GET',
+		handler: (req, res, next) => {
+			var favs = sc.showfavourites();
+			var respuesta = {"tamanio": favs.length};
+			if(favs.length > 0)
+					for(i=0; i<favs.length; i++)
+							respuesta["Serie " (i+1)] = favs[i];
+			res.send(respuesta);
+		}
 	});
-
-app.listen(app.get('port'), function() {
-	console.log("Node app is running at localhost:" + app.get('port'));
-});
-
 
 // Aquí comienza la parte del bot
 const TelegramBot = require('node-telegram-bot-api');
@@ -57,7 +49,11 @@ bot.onText(/^\/start/, function(msg){
 	var username = msg.from.username;
 
 	bot.sendMessage(chatId, "Hola, " + username + " soy un bot y voy a mantenerte al tanto de tus series favoritas");
-	bot.sendMessage(chatId, "Si deseas añadir una serie utiliza /addserie <Serie> para añadir a favoritos esa serie. \n Si deseas ver tu lista de favoritos utiliza /showfavourites \n si quieres eliminar una serie usa /deleteserie <Serie> \n ");
+	bot.sendMessage(chatId, "Si deseas añadir una serie utiliza /addserie <Serie> para añadir a favoritos esa serie."+
+							" \n Si deseas ver tu lista de favoritos utiliza /showfavourites"+
+							" \n Si quieres eliminar una serie usa /deleteserie <Serie>"+
+							" \n Para ver la última serie añadida usa /lastfavourite"+
+							"\n Para ver la última serie eliminada usa /lastdeleted");
 
 });
 
@@ -90,6 +86,22 @@ bot.onText(/^\/deleteserie (.+)/, (msg, match) => {
 	else{
 			bot.sendMessage(chatId, "He eliminado " + serie_add + " de tu lista de favoritos");
 	}
+});
+
+bot.onText(/^\/lastfavourite/, function(msg){
+	var chatId = msg.chat.id;
+	var username = msg.from.username;
+	var last = sc.lastfavourite();
+	
+	bot.sendMessage(chatId, last);
+});
+
+bot.onText(/^\/lastdeleted/, function(msg){
+	var chatId = msg.chat.id;
+	var username = msg.from.username;
+	var last = sc.lastdeleted();
+	
+	bot.sendMessage(chatId, last);
 });
 
 module.exports = app
