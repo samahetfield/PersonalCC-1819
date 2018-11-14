@@ -45,6 +45,34 @@ var SerieClass = require('../SerieClass');
 						}
 					});
 
+					it('Show favourites', function(done){
+						sc.addserie("test");
+						var favs = sc.showfavourites();
+
+						if(favs.length > 0)
+							done();
+
+
+					});
+
+					it('Show last added', function(done){
+						sc.addserie("test");
+						var lastserie = sc.lastfavourite();
+
+						if(lastserie == "test")
+							done();
+					})
+
+					it('Show last removed', function(done){
+						sc.addserie("test");
+						sc.deleteserie("test");
+
+						var lastdeleted = sc.lastdeleted();
+
+						if(lastdeleted == "test")
+							done();
+					})
+
 				});
 
 
