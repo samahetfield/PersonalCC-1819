@@ -15,7 +15,7 @@ app
 		handler: (req, res, next) => {
 			var response_get = {"status": "OK", 
 								"ejemplo": {"ruta": "/series_favoritas",
-											"valor": {"tamaño": sc.length}
+											"valor": {"tamaño": "numero de series favoritas"}
 											}
 								};
 			res.send(response_get);
@@ -30,9 +30,6 @@ app
 		handler: (req, res, next) => {
 			var favs = sc.showfavourites();
 			var respuesta = {"tamanio": favs.length};
-			if(favs.length > 0)
-					for(i=0; i<favs.length; i++)
-							respuesta["Serie " (i+1)] = favs[i];
 			res.send(respuesta);
 		}
 	});
