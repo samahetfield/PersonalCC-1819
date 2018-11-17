@@ -18,11 +18,10 @@ Para realizar este proyecto utilizaremos una arquitectura basada en microservici
 
 - Microservicio 1: Este microservicio se encargará de leer los datos de la API TvDB. 
 
-- Microservicio 2: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MongoDB.
+- Microservicio 2: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MySQL.
 
 - Microservicio 3: Microservicio que tendrá el Bot de Telegram, para ello usaremos NodeJS. Este microservicio podremos decir que tendrá la mayor carga de trabajo ya que será el encargado de enviar las peticiones hacia el microservicio que accede a la API, así como de leer y enviar datos hacia el microservicio que maneje la base de datos.
 
-La comunicación entre los servicios la haremos a través de **RabbitMQ**.
 
 # Creación del Bot
 
@@ -45,7 +44,8 @@ Nuestro bot estará identificado en telegram como @seriesalert_bot y para comenz
 Actualmente tiene las funcionalidades muy limitadas, pero nos permite ejecutar los siguientes comandos:
 - **/addserie** param1: Aquí le pasaremos como parámetro el nombre de la serie que queremos en favoritos para que la almacene.
 - **/showfavourites**: Nos mostrará una lista de nuestras series favoritas.
-- **/seeactors** param1: Nos mostrará una lista de actores de la serie indicada. (Actualmente no se encuentra en funcionamiento ya que no hemos accedido a la API aún).
+- **/lastfavourite** : Nos mostrará la última serie añadida a favoritos.
+- **/lastdeleted**: Nos mostrará la última serie que hemos eliminado de favoritos.
 
 # Infraestructura
 
@@ -65,7 +65,7 @@ Al haber seleccionado este lenguaje, tendremos un archivo llamado ``` package.js
         "supertest": "^3.3.0"
     }
 
-Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **node-telegram-bot-api** necesaria para el bot de telegram, así como otras que podemos ver como pueden ser **supertest** utilizada para los test, **mocha** para correr los test programados o **express** el microframework de Node.	
+Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **node-telegram-bot-api** necesaria para el bot de telegram, así como otras que podemos ver como pueden ser **supertest** utilizada para los test, **mocha** para correr los test programados o **Flicker** el microframework de Node.	
 
 Finalmente, como vamos a desplegar en Heroku necesitaremos un archivo llamado ```Procfile ``` que nos servirá para indicar los comandos que ejecutará el dynos.
 En nuestro caso, es sencillo y tendrá únicamente una orden.
@@ -84,7 +84,7 @@ Para realizar el despligue en Heroku es necesario seguir los siguientes pasos:
 - [Instalar heroku](https://devcenter.heroku.com/articles/heroku-cli) en nuestro equipo.
 - Hacer login con el comando ```heroku login```
 - Crear la app de heroku con ```heroku create```
-- Subirlo a Heroku con ```git push heroku master```
+- Subirlo a Heroku con ```git push heroku master```. También podemos configurar Github y Heroku para que aunque únicamente haciendo push sobre nuestro repositorio se despliegue automáticamente en Heroku, sin necesidad de hacer la subida a heroku.
 - Ejecutar en la terminal ```heroku open``` para que se abra el navegador y ver el JSON devuelto con el código ```{status: OK}```
 
 # Licencia
