@@ -1,6 +1,9 @@
 #directory node_modules
 node_modules/
 
+# file package-lock generated
+package-lock.json
+
 # Compiled class file
 *.class
 

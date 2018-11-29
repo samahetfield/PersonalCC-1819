@@ -24,7 +24,7 @@ SerieClass.prototype.deleteserie = function(serie){
 	var index = this.favourites.indexOf(serie);
 	if(index > -1){
 		this.lastremoved = serie;
-		this.favourites.splice(0, 1);
+		this.favourites.splice(index, 1);
 	}
 	return index;
 }
