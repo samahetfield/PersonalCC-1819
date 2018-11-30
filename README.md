@@ -63,13 +63,23 @@ Para realizar el despligue en Heroku es necesario seguir los siguientes pasos:
 - Subirlo a Heroku. Podemos configurar Github y Heroku para que únicamente haciendo push sobre nuestro repositorio se despliegue automáticamente en Heroku, sin necesidad de hacer la subida a heroku.
   Esta configuración se muestra en en la siguiente imagen.
 
-  /docs/imagenes/connectWithGithub.png
-
+  https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/connectWithGithub.png
+  
   Una vez que conectamos heroku con Github, lo que tendremos que hacer será activar el despliegue automático y que lo haga únicamente cuando pase los test de Travis.
   
-  /docs/imagenes/automaticDeploy.png
+  https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/automaticDeploy.png
 
 - Ejecutar en la terminal ```heroku open``` para que se abra el navegador y ver el JSON devuelto con el código ```{status: OK}```
+
+
+# Travis
+
+Los test, como ya menciona anteriormente y como vemos en las dependencias de ``` package.json ``` los vamos a realizar con supertest.  
+Pero queremos automatizar estos test y que se realicen cada vez que realicemos una subida a nuestro Github y de esta forma que únicamente nos despliegue los cambios cuando estos sean correctos, y evitar así que se despliegue la aplicación con una funcionalidad errónea.
+
+Para ello vinculamos Travis con Github, concretamente con el repositorio en el que tenemos el proyecto.
+Y seguidamente crear un archivo ``` .travis.yml ``` en el que indicamos lo que debe instalar para ejecutar los test (en neustro caso **mocha**) y la orden que debe ejecutar para que los test se lancen. Además indicamos el lenguaje y la versión del mismo con la que ejecutar los tests.
+
 
 # Despliegue
 
