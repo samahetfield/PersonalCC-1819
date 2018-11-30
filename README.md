@@ -1,4 +1,4 @@
-# Descripción del proyecto
+# Página del proyecto
 
 La [página](https://samahetfield.github.io/PersonalCC-1819/) contendrá el proyecto desarrollado en la asignatura Cloud Computing.
 
@@ -6,7 +6,7 @@ La [página](https://samahetfield.github.io/PersonalCC-1819/) contendrá el proy
 
 # Introducción.
 
-Realizar un bot de telegram que nos permita consultar las fechsa de estreno de los capítulos de nuestras series favoritas, de forma que el bot nos pueda avisar cuándo se estrena un capítulo y poder llevar al día nuestra serie. Para realizar este bot utilizaremos la [API TvDB](https://www.thetvdb.com/), que nos dará la información de las series que consultaremos.
+Realizar un servicio web que nos permita consultar información de nuestras series favoritas. Para realizar este serivicio web utilizaremos la [API TvDB](https://www.thetvdb.com/), que nos dará la información de las series que consultaremos.
 
 ## Descripción del problema.
 
@@ -14,33 +14,15 @@ Para las personas que nos gustan las series y las llevamos al día, cuando se te
 
 ## Solución propuesta.
 
-Realizar un bot de telegram que nos avise y nos recuerde cuándo se lanzan los nuevos capítulos de las series favoritas que nosotros vayamos consultando. De esta forma podremos estar al tanto siempre de nuestras series y llevarlas al día.
+Realizar un servicio web que nos avise y nos de información de cuándo se lanzan los nuevos capítulos de las series favoritas que nosotros vayamos consultando. De esta forma podremos estar al tanto siempre de nuestras series y llevarlas al día.
 
 # Arquitectura
 
 Para realizar este proyecto utilizaremos una arquitectura basada en microservicios, la cual deberá tener mínimo los siguientes:
 
-- Microservicio 1: Este microservicio se encargará de leer los datos de la API TvDB. 
+- Microservicio de consulta a la API: Este microservicio se encargará de leer los datos de la API TvDB. 
 
-- Microservicio 2: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MySQL.
-
-- Microservicio 3: Microservicio que tendrá el Bot de Telegram, para ello usaremos NodeJS. Este microservicio podremos decir que tendrá la mayor carga de trabajo ya que será el encargado de enviar las peticiones hacia el microservicio que accede a la API, así como de leer y enviar datos hacia el microservicio que maneje la base de datos.
-
-
-# Creación del Bot
-
-Para la creación del bot hemos hecho uso de **TheBotFather** para recibir nuestro TOKEN y a partir de ahí comenzar a desarrollarlo en Node.js siguiendo este [tutorial](https://github.com/yagop/node-telegram-bot-api).
-Primero es necesario instalar la API de telegram para Node.js haciendo uso de ```npm install --save node-telegram-bot-api```
-Con esto ya podremos comenzar a realizar nuestro bot.
-
-El principal componente son las definiciones de eventos, es decir, los comandos que el usuario escribe y el bot responde al recibirlos.
-La cabecera de estos métodos debe ser de la sigueinte forma:
-
-		bot.onText(/\/start (.+)/, (msg, match) => {
-			//Introducimos la acción a realizar
-		}
-
-En este caso, estamos creando un evento que se ejecutará cuando el usuario introduzca la orden ```/start``` y nosotros le indicaremos qué debe hacer el bot al recibir esa orden dentro de esta función.
+- Microservicio de información: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MySQL.
 
 # Infraestructura
 
@@ -55,17 +37,16 @@ Al haber seleccionado este lenguaje, tendremos un archivo llamado ``` package.js
         "jade": "~1.3.0",
         "mocha": "^5.2.0",
         "morgan": "^1.9.1",
-        "node-telegram-bot-api": "^0.30.0",
         "static-favicon": "~1.0.0",
         "supertest": "^3.3.0"
     }
 
-Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **node-telegram-bot-api** necesaria para el bot de telegram, así como otras que podemos ver como pueden ser **supertest** utilizada para los test, **mocha** para correr los test programados o **Flicker** el microframework de Node.	
+Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **supertest** utilizada para los test, **mocha** para correr los test programados o **Flicker** el microframework de Node.	
 
 Finalmente, como vamos a desplegar en Heroku necesitaremos un archivo llamado ```Procfile ``` que nos servirá para indicar los comandos que ejecutará el dynos.
 En nuestro caso, es sencillo y tendrá únicamente una orden.
 
-	web: node bot.js
+	web: node SerieService.js
 
 Podemos diferenciar dos partes en esta orden del [Procfile](https://devcenter.heroku.com/articles/procfile). La primera parte **web** que nos servirá para indicar que la aplicación va a correr un servidor web y la segunda parte que será el comando que el dyno debe ejecutar para lanzar la aplicación.
 
@@ -79,7 +60,15 @@ Para realizar el despligue en Heroku es necesario seguir los siguientes pasos:
 - [Instalar heroku](https://devcenter.heroku.com/articles/heroku-cli) en nuestro equipo.
 - Hacer login con el comando ```heroku login```
 - Crear la app de heroku con ```heroku create```
-- Subirlo a Heroku con ```git push heroku master```. También podemos configurar Github y Heroku para que aunque únicamente haciendo push sobre nuestro repositorio se despliegue automáticamente en Heroku, sin necesidad de hacer la subida a heroku.
+- Subirlo a Heroku. Podemos configurar Github y Heroku para que únicamente haciendo push sobre nuestro repositorio se despliegue automáticamente en Heroku, sin necesidad de hacer la subida a heroku.
+  Esta configuración se muestra en en la siguiente imagen.
+
+  /docs/imagenes/connectWithGithub.png
+
+  Una vez que conectamos heroku con Github, lo que tendremos que hacer será activar el despliegue automático y que lo haga únicamente cuando pase los test de Travis.
+  
+  /docs/imagenes/automaticDeploy.png
+
 - Ejecutar en la terminal ```heroku open``` para que se abra el navegador y ver el JSON devuelto con el código ```{status: OK}```
 
 # Despliegue
