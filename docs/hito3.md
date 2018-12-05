@@ -8,8 +8,8 @@ Creada la máquina virtual, para probarla debemos introducir la IP de la misma d
 
 Hecho esto, tendremos que ejecutarlo y tendremos el siguiente resultado:
 
-![Resultado Playbook](/imagenes/hito3/resultado-playbook.png)
+![Resultado Playbook](./imagenes/hito3/resultado-playbook.png)
 
 Como se comprueba en los resultados, vemos que se ha instalado todo lo necesario correctamente, así que únicamente vamos a pasar a acceder a la IP para ver que nos devuelve el Status OK.
 
-![Status OK](/imagenes/hito3/statusOK.png)
+![Status OK](./imagenes/hito3/statusOK.png)
