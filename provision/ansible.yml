@@ -15,13 +15,13 @@
      become_method: sudo
      git: >
       repo=https://github.com/samahetfield/PersonalCC-1819.git
-      dest=/home/samaniego/PersonalCC
+      dest=/home/PersonalCC
 
    - name: Install dependences
      become: true
      become_method: sudo
      npm:
-      path: /home/samaniego/PersonalCC
+      path: /home/PersonalCC
 
    - name: "Install forever (to run Node.js app)."
      become: true
@@ -34,4 +34,4 @@
      command: iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5000  
 
    - name: "Start Node.js app."
-     command: forever start /home/samaniego/PersonalCC/SerieService.js
+     command: forever start /home/PersonalCC/SerieService.js
