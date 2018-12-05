@@ -1,0 +1,37 @@
+---
+- hosts: azure
+  vars:
+    packages: ["git", "npm"]
+  tasks:
+   - name: Install packages
+     become: true
+     become_method: sudo
+     apt: 
+      name: "{{ packages }}"
+      state: present
+
+   - name: clone repository
+     become: true
+     become_method: sudo
+     git: >
+      repo=https://github.com/samahetfield/PersonalCC-1819.git
+      dest=/home/samaniego/PersonalCC
+
+   - name: Install dependences
+     become: true
+     become_method: sudo
+     npm:
+      path: /home/samaniego/PersonalCC
+
+   - name: "Install forever (to run Node.js app)."
+     become: true
+     become_method: sudo
+     npm: name=forever global=yes state=present
+
+   - name: Redirigir puertos
+     become: true
+     become_method: sudo
+     command: iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5000  
+
+   - name: "Start Node.js app."
+     command: forever start /home/samaniego/PersonalCC/SerieService.js
