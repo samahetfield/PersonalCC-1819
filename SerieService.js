@@ -4,6 +4,10 @@ const flicker = require('flickerjs');
 const SerieClass = require('./SerieClass');
 var sc = new SerieClass();
 
+
+const TVDB = require('node-tvdb');
+const tvdb = new TVDB('S44TO4WETGV44IAE');
+
 var port = process.env.PORT || 5000;
 
 
@@ -60,24 +64,22 @@ app
 	});
 
 
+
+
 app
 	.add({
 		url: '/series_favoritas/:serie',
 		method: 'PUT',
 		handler: (req, res, next) => {
 			var serie_added = req.params.serie;
-			sc.addserie(serie_added);
 
-			var favourites = sc.showfavourites();
+			tvdb.getSeriesByName(serie_added)
+    		.then(response => { console.log('true'); 	
+    							var identify_serie = {"nombre": response[0].seriesName, "id": response[0].id};
+								sc.addserie(identify_serie); 
+								res.sendStatus(200);})
+    		.catch(error => { console.log('false'); res.sendStatus(404); });
 
-			var index = favourites.indexOf("test");
-
-			if(index > -1){
-				res.sendStatus(200);
-			}
-			else{
-				res.sendStatus(404);
-			}
 		}
 	});
 
