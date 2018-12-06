@@ -1,5 +1,7 @@
-#directory node_modules
+#directory node_modules, views and public
 node_modules/
+views/
+public/
 
 # file package-lock generated
 package-lock.json
