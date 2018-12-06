@@ -3,6 +3,12 @@ var request = require('supertest'),
 
 
 var SerieClass = require('../SerieClass');
+var sc = new SerieClass();
+var infoSerie = require('../infoSerie');
+
+//Variable de prueba
+var iserie = new infoSerie();
+iserie.addInfoSerie({nombre:"test", temporadas:"0", capitulos:"0", actores:[]});
 
 				describe( "GET server test", function() {
 					it('responds with JSON Status OK on /', function (done) {
@@ -44,27 +50,13 @@ var SerieClass = require('../SerieClass');
 				describe( "GET Functionality", function() {
 
 					it('responds with last serie added on /series_favoritas/lastadded', function(done){
-						var sc = new SerieClass();
-						
-						sc.addserie("test");
+						sc.addserie(iserie);
 						var lastserie = sc.lastfavourite();
 
 						if(lastserie == "test")
 							done();
 
 					});
-
-					it('Show last removed', function(done){
-						var sc = new SerieClass();
-
-						sc.addserie("test");
-						sc.deleteserie("test");
-
-						var lastdeleted = sc.lastdeleted();
-
-						if(lastdeleted == "test")
-							done();
-					})
 				});
 
 

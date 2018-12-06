@@ -1,12 +1,10 @@
 const flicker = require('flickerjs');
 
-// Importamos la clase SerieClass
+// Importamos la clase SerieClass e infoSerie
 const SerieClass = require('./SerieClass');
 var sc = new SerieClass();
 
-
-const TVDB = require('node-tvdb');
-const tvdb = new TVDB('S44TO4WETGV44IAE');
+const infoSerie = require('./infoSerie');
 
 var port = process.env.PORT || 5000;
 
@@ -73,13 +71,32 @@ app
 		handler: (req, res, next) => {
 			var serie_added = req.params.serie;
 
-			tvdb.getSeriesByName(serie_added)
-    		.then(response => { console.log('true'); 	
-    							var identify_serie = {"nombre": response[0].seriesName, "id": response[0].id};
-								sc.addserie(identify_serie); 
-								res.sendStatus(200);})
-    		.catch(error => { console.log('false'); res.sendStatus(404); });
+			var iserie = new infoSerie();
 
+			var serie_data = {nombre:serie_added, temporadas: "7", capitulos:"34", actores:["Morgan", "Sara", "Conor"]};
+			iserie.addInfoSerie(serie_data);
+
+			sc.addserie(iserie);
+
+			var favs = sc.showfavourites();	
+			var index = -1;
+			var found = 0;
+			for(var i = 0; i < favs.length;i++){
+        		if(favs[i].nombre == serie_added && found == 0){
+        			index = 0;
+        			found = 1;
+        		}
+        		else{
+        			index = -1;
+        		}
+  			}
+
+			if(index > -1){
+				res.sendStatus(200);
+			}
+			else{
+				res.sendStatus(404);
+			}
 		}
 	});
 
