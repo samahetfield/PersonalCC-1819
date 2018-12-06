@@ -59,11 +59,11 @@ Para realizar el despligue en Heroku es necesario seguir los siguientes pasos:
 - Subirlo a Heroku. Podemos configurar Github y Heroku para que únicamente haciendo push sobre nuestro repositorio se despliegue automáticamente en Heroku, sin necesidad de hacer la subida a heroku.
   Esta configuración se muestra en en la siguiente imagen.
 
-  https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/connectWithGithub.png
+  ![Conexion con Github](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/connectWithGithub.png)
   
   Una vez que conectamos heroku con Github, lo que tendremos que hacer será activar el despliegue automático y que lo haga únicamente cuando pase los test de Travis.
   
-  https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/automaticDeploy.png
+  ![Despliegue automático](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/automaticDeploy.png)
 
 - Ejecutar en la terminal ```heroku open``` para que se abra el navegador y ver el JSON devuelto con el código ```{status: OK}```
 

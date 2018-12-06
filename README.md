@@ -24,53 +24,11 @@ Para realizar este proyecto utilizaremos una arquitectura basada en microservici
 
 - Microservicio de información: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MySQL.
 
-# Infraestructura
-
-Se ha decidido usar Node.js como lenguaje para nuestra aplicación que se va a encontrar desplegada en Heroku.
-Al haber seleccionado este lenguaje, tendremos un archivo llamado ``` package.json ``` en el que encontraremos las dependencias necesarias para nuestra aplicación.
-
-	"dependencies": {
-        "body-parser": "^1.18.3",
-        "cookie-parser": "^1.4.3",
-        "debug": "^4.1.0",
-        "flickerjs": "^2.0.7",
-        "jade": "~1.3.0",
-        "mocha": "^5.2.0",
-        "morgan": "^1.9.1",
-        "static-favicon": "~1.0.0",
-        "supertest": "^3.3.0"
-    }
-
-Como se observa en este fragmento de código del archivo, vemos que necesitamos dependencias como **supertest** utilizada para los test, **mocha** para correr los test programados o **Flicker** el microframework de Node.	
-
-Finalmente, como vamos a desplegar en Heroku necesitaremos un archivo llamado ```Procfile ``` que nos servirá para indicar los comandos que ejecutará el dynos.
-En nuestro caso, es sencillo y tendrá únicamente una orden.
-
-	web: node SerieService.js
-
-Podemos diferenciar dos partes en esta orden del [Procfile](https://devcenter.heroku.com/articles/procfile). La primera parte **web** que nos servirá para indicar que la aplicación va a correr un servidor web y la segunda parte que será el comando que el dyno debe ejecutar para lanzar la aplicación.
-
 # Despliegue en el PaaS
 Se ha seleccionado Heroku para el despliegue de nuestra aplicación. Hemos seleccionado esta plataforma frente a otras gracias a estar más familiarizados con ella ya que se ha trabajado con ella en los ejercicios del tema 3, así como por su suscripción gratuita.
 Por otro lado, es sencillo desplegar nuestra aplicación en esta plataforma.
 
-Para realizar el despligue en Heroku es necesario seguir los siguientes pasos:
-- Estar dado de alta.
-- Tener el repositorio de GitHub donde vamos a subir la aplicación clonado en local.
-- [Instalar heroku](https://devcenter.heroku.com/articles/heroku-cli) en nuestro equipo.
-- Hacer login con el comando ```heroku login```
-- Crear la app de heroku con ```heroku create```
-- Subirlo a Heroku. Podemos configurar Github y Heroku para que únicamente haciendo push sobre nuestro repositorio se despliegue automáticamente en Heroku, sin necesidad de hacer la subida a heroku.
-  Esta configuración se muestra en en la siguiente imagen.
-
-  https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/connectWithGithub.png
-  
-  Una vez que conectamos heroku con Github, lo que tendremos que hacer será activar el despliegue automático y que lo haga únicamente cuando pase los test de Travis.
-  
-  https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/imagenes/automaticDeploy.png
-
-- Ejecutar en la terminal ```heroku open``` para que se abra el navegador y ver el JSON devuelto con el código ```{status: OK}```
-
+Se puede acceder a más información del despliegue accediendo [AQUI](https://github.com/samahetfield/PersonalCC-1819#despliegue-en-el-paas);
 
 # Travis
 
@@ -84,6 +42,15 @@ Y seguidamente crear un archivo ``` .travis.yml ``` en el que indicamos lo que d
 # Despliegue
 
 despliegue https://hidden-basin-43122.herokuapp.com/
+
+
+# Provisionamiento
+
+Para el provisionamiento se ha utilizado Ansible. El servicio se ha desplegado en la plataforma Azure y podremos acceder a ella desde la siguiente IP:
+
+MV: 40.74.50.245
+
+Toda la información relacionada con el Provisionamiento se encuentra en el siguiente [Documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito3.md);
 
 
 # Licencia
