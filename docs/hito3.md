@@ -1,4 +1,4 @@
-#Hito 3
+# Hito 3
 
 Para el hito se ha desarrollado un playbook en Ansible que nos permitirá desplegar nuestro servicio en una máquina virtual de Azure.
 
@@ -51,6 +51,10 @@ Y finalmente, podremos comprobar que funciona accediendo a nuestra dirección IP
 ![Status OK](./imagenes/hito3/statusOK-sergio.png)
 
 #Comprobación de mi provisionamiento
+
+Mi provisionamiento ha sido comprobado por el compañero Alexander Manuel Josef Grimm.
+Podemos ver el correcto funcionamiento desde su [documentación](https://github.com/alex1ai/ugr-master-cc/blob/gh-pages/provision.md#checking-playbook-of-other-student).
+
 
 # Comprobación de provisionamiento de otro compañero
 

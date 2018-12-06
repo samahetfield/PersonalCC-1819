@@ -28,7 +28,7 @@ Para realizar este proyecto utilizaremos una arquitectura basada en microservici
 Se ha seleccionado Heroku para el despliegue de nuestra aplicación. Hemos seleccionado esta plataforma frente a otras gracias a estar más familiarizados con ella ya que se ha trabajado con ella en los ejercicios del tema 3, así como por su suscripción gratuita.
 Por otro lado, es sencillo desplegar nuestra aplicación en esta plataforma.
 
-Se puede acceder a más información del despliegue accediendo [AQUI](https://github.com/samahetfield/PersonalCC-1819#despliegue-en-el-paas);
+Se puede acceder a más información del despliegue accediendo [AQUI](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/index.md#infraestructura);
 
 # Travis
 
