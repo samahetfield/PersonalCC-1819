@@ -1,5 +1,5 @@
 ---
-- hosts: azure
+- hosts: all
   vars:
     packages: ["git", "npm"]
   tasks:
