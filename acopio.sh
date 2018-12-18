@@ -9,6 +9,7 @@ echo "Realice el login"
 #Hacemos login en azure
 az login
 
+az account set --subscription "Hito 3 SERGIO SAMANIEGO MARTINEZ"
 
 echo "----------------------------------------------------------------------------------"
 echo "----------------------------------------------------------------------------------"
