@@ -50,8 +50,15 @@ Para el provisionamiento se ha utilizado Ansible. El servicio se ha desplegado e
 
 MV: 40.74.50.245
 
-Toda la información relacionada con el Provisionamiento se encuentra en el siguiente [Documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito3.md);
+Toda la información relacionada con el Provisionamiento se encuentra en el siguiente [Documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito3.md).
 
+# Automatización
+
+Se ha realizado un [script](https://github.com/samahetfield/PersonalCC-1819/blob/master/acopio.sh) para la automatización de crear una máquina virtual en Azure y provisionarla posteriormente con ansible, usando un [playbook](https://github.com/samahetfield/PersonalCC-1819/blob/master/provision/ansible.yml).
+
+La documentación detallada de todas las tareas realizadas para la automatización se encuentran en este [documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito4.md).
+
+MV2: 13.93.115.181
 
 # Licencia
 Este software se encontrará sujeto a la licencia GNU General Public License v3.0

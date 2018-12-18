@@ -53,6 +53,8 @@ Hecho esto, llegaremos al paso final, que corresponderá con el provisionamiento
 
 En esta parte, lanzaremos el playbook de ansible que creamos en el hito anterior para provisionar la máquina virtual, para ello tendremos que indicarle que lo ejecute sobre la IP que le pasamos como argumento.
 
+El script podemos encontrarlo accediendo a este [enlace](https://github.com/samahetfield/PersonalCC-1819/blob/master/acopio.sh).
+
 Una vez ejecutado el playbook correctamente, podremos comprobar que nuestra máquina se ha creado correctamente y se ha provisionado accediendo desde nuestro navegador a la IP pública que nos ha dado.
 
 ![Test de latencia](./imagenes/hito4/statusOK.png)
