@@ -43,9 +43,3 @@ echo "La IP de tu máquina virtual creada es $Public_IP"
 az vm open-port --resource-group MvProjectCC --name vmHito4 --port 80
 
 
-#Ejecutamos ansible para el provisionamiento de la MV
-
-ansible-playbook ./provision/ansible.yml --inventory "$Public_IP,"
-
-
-
