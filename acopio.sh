@@ -4,26 +4,10 @@ REGION="westeurope"
 
 echo "Script de automatización para creación de una máquina virtual en Azure."
 
-echo "Realice el login"
 
-#Hacemos login en azure
-az login
+echo "Vamos a crear un grupo de recursos para alojar la máquina"
+az group create --name MvProjectCC --location $REGION 
 
-az account set --subscription "Hito 3 SERGIO SAMANIEGO MARTINEZ"
-
-echo "----------------------------------------------------------------------------------"
-echo "----------------------------------------------------------------------------------"
-echo "----------------------------------------------------------------------------------"
-
-echo "¿Es la primera vez que ejecuta el script? [Y/N]".
-
-read FIRSTTIME
-
-if [ $FIRSTTIME = "Y" ] || [ $FIRSTTIME = "y" ]
-then
-	echo "Vamos a crear un grupo de recursos para alojar la máquina"
-	az group create --name MvProjectCC --location $REGION 
-fi	
 
 
 echo "----------------------------------------------------------------------------------"
