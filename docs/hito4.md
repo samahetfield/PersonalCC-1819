@@ -20,17 +20,12 @@ Para la imagen de nuestra máquina virtual, una vez decantados por Ubuntu Server
 
 En nuestro script de automatización, lo que haremos será las siguientes tareas, en el orden que aparecen:
 
-- Inidcamos al usuario que debe hacer login con su cuenta de Azure.
-- Creamos un grupo de recursos si es la primera ejecución del script.
+- Creamos un grupo de recursos.
 - Creamos la máquina virtual.
 - Abrimos el puerto 80 para acceder vía HTTP.
 - Provisionamos la máquina virtual con ansible.
 
-La primera tarea, como ya se ha indicado, el usuario deberá hacer Login y se corresponderá con la siguiente parte del script.
-
-![Login](./imagenes/hito4/login.png)
-
-Una vez que el usuario haga login con su cuenta, pasaremos a preguntar si es la primera vez que se ejecuta el script para crear el grupo de recursos o no.
+Lo primero que haremos será crear el grupo de recursos.
 
 ![Grupo de Recursos](./imagenes/hito4/gruporecursos.png)
 
