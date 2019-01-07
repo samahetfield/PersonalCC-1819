@@ -1,8 +1,13 @@
 const flicker = require('flickerjs');
+const TVDB = require('node-tvdb');
+const tvdb = new TVDB('S44TO4WETGV44IAE');
 
 // Importamos la clase SerieClass e infoSerie
 const SerieClass = require('./SerieClass');
 var sc = new SerieClass();
+
+const API_TVDB = require('./API_TVDB');
+var api_tvdb = new API_TVDB();
 
 const infoSerie = require('./infoSerie');
 
@@ -68,35 +73,32 @@ app
 	.add({
 		url: '/series_favoritas/:serie',
 		method: 'PUT',
-		handler: (req, res, next) => {
+		handler: async (req, res, next) => {
 			var serie_added = req.params.serie;
+			//console.log(req.params);
 
-			var iserie = new infoSerie();
+			var favs_ant = (sc.showfavourites()).length;
 
-			var serie_data = {nombre:serie_added, temporadas: "7", capitulos:"34", actores:["Morgan", "Sara", "Conor"]};
-			iserie.addInfoSerie(serie_data);
+			//console.log(favs_ant);
 
-			sc.addserie(iserie);
+			var respo = await api_tvdb.existeSerie(serie_added, sc).catch((error) =>{
+				console.log(error);
+			});
 
-			var favs = sc.showfavourites();	
-			var index = -1;
-			var found = 0;
-			for(var i = 0; i < favs.length;i++){
-        		if(favs[i].nombre == serie_added && found == 0){
-        			index = 0;
-        			found = 1;
-        		}
-        		else{
-        			index = -1;
-        		}
-  			}
+			//console.log(respo);	
 
-			if(index > -1){
+			var favs = (sc.showfavourites()).length;	
+
+			//console.log(favs);
+			
+			if(favs > favs_ant){
 				res.sendStatus(200);
 			}
 			else{
 				res.sendStatus(404);
 			}
+
+			
 		}
 	});
 
@@ -116,5 +118,10 @@ app
 			}
 		}
 	});
+
+	function function2() {
+    // all the stuff you want to happen after that pause
+    console.log('Blah blah blah blah extra-blah');
+}
 
 	module.exports = app
