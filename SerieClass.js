@@ -1,12 +1,30 @@
+const infoSerie = require('./infoSerie');
+
+
 function SerieClass(){
 	this.favourites = [];
-	this.lastadded = "";
+	this.lastadded = {nombre:"", id:0};
 	this.lastremoved = "";
 }
 
 SerieClass.prototype.addserie = function(serie){
 	this.favourites = this.favourites.concat(serie);
-	this.lastadded = serie.nombre;
+	this.lastadded = {nombre:serie.nombre, id:serie.id};
+}
+
+SerieClass.prototype.getSerie = function(id){
+	var iSerie = infoSerie();
+
+	this.favourites.forEach(function(element){
+		if(element.id == id){
+			//console.log(element.id);
+			//console.log(id);
+			iSerie = element;
+		}
+	});
+
+	//console.log(iSerie);
+	return iSerie;
 }
 
 SerieClass.prototype.showfavourites = function(){
@@ -24,7 +42,8 @@ SerieClass.prototype.deleteserie = function(serie){
 	var found = 0;
 	var index = -1;
 	for(var i = 0; i < this.favourites.length && found == 0;i++){
-        		if((this.favourites[i].nombre == serie) && (found == 0)){
+
+        		if((this.favourites[i].nombre.toLowerCase() == serie) && (found == 0)){
         			index = i;
         			found = 1;
         		}

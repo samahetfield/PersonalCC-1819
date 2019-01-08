@@ -75,21 +75,24 @@ app
 		method: 'PUT',
 		handler: async (req, res, next) => {
 			var serie_added = req.params.serie;
-			//console.log(req.params);
 
 			var favs_ant = (sc.showfavourites()).length;
 
-			//console.log(favs_ant);
 
 			var respo = await api_tvdb.existeSerie(serie_added, sc).catch((error) =>{
 				console.log(error);
 			});
 
-			//console.log(respo);	
 
 			var favs = (sc.showfavourites()).length;	
+			var lastadded = sc.lastfavourite();
 
-			//console.log(favs);
+
+			//Añadimos los episodios correspondientes a la serie
+			var respo2 = await api_tvdb.getEpisodes(lastadded.id, sc).catch((error) =>{
+				console.log(error);
+			});
+
 			
 			if(favs > favs_ant){
 				res.sendStatus(200);
@@ -119,9 +122,5 @@ app
 		}
 	});
 
-	function function2() {
-    // all the stuff you want to happen after that pause
-    console.log('Blah blah blah blah extra-blah');
-}
 
 	module.exports = app

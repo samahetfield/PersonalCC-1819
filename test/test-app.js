@@ -8,7 +8,7 @@ var infoSerie = require('../infoSerie');
 
 //Variable de prueba
 var iserie = new infoSerie();
-iserie.addInfoSerie({nombre:"test", temporadas:"0", capitulos:"0", actores:[]});
+iserie.addInfoSerie({nombre:"test", temporadas:"0", capitulos:"0", actores:[], id:0});
 
 				describe( "GET server test", function() {
 					it('responds with JSON Status OK on /', function (done) {
@@ -27,21 +27,22 @@ iserie.addInfoSerie({nombre:"test", temporadas:"0", capitulos:"0", actores:[]});
 				});
 
 				describe( "PUT and DELETE Functionality", function(){
+					
 					it('Put new serie', function(done){
 						request(app)
-							.put('/series_favoritas/Test')
+							.put('/series_favoritas/Arrow')
 							.expect(200,done);
 					});
 
 					it('Delete favourite serie', function(done){
 						request(app)
-							.delete('/series_favoritas/Test')
+							.delete('/series_favoritas/Arrow')
 							.expect(200, done);
 					});
 
 					it('Delete not exist serie', function(done){
 						request(app)
-							.delete('/series_favoritas/SerieQueNoExiste')
+							.delete('/series_favoritas/invent')
 							.expect(404, done);
 					});
 
@@ -53,11 +54,12 @@ iserie.addInfoSerie({nombre:"test", temporadas:"0", capitulos:"0", actores:[]});
 						sc.addserie(iserie);
 						var lastserie = sc.lastfavourite();
 
-						if(lastserie == "test")
+						if(lastserie.nombre == "test")
 							done();
 
 					});
 				});
+
 
 
 
