@@ -17,13 +17,10 @@ SerieClass.prototype.getSerie = function(id){
 
 	this.favourites.forEach(function(element){
 		if(element.id == id){
-			//console.log(element.id);
-			//console.log(id);
 			iSerie = element;
 		}
 	});
 
-	//console.log(iSerie);
 	return iSerie;
 }
 
