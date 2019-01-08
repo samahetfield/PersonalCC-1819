@@ -6,6 +6,7 @@ install:
   - npm install supertest
   - npm install mocha
   - npm install flickerjs
+  - npm install node-tvdb
 script:
   - npm test
 
