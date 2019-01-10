@@ -7,6 +7,7 @@ install:
   - npm install mocha
   - npm install flickerjs
   - npm install node-tvdb
+  - npm install mysql
 script:
   - npm test
 
