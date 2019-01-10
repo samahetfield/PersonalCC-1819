@@ -14,6 +14,14 @@ const infoSerie = require('./infoSerie');
 var port = process.env.PORT || 5000;
 
 
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "192.168.1.74",
+  user: "sama",
+  password: "somepsswrd",
+  database: "tvdb"
+});
     var app = flicker();
     app
         .add({
@@ -95,6 +103,12 @@ app
 
 			
 			if(favs > favs_ant){
+				var sql = "INSERT INTO usuarios (name, id) VALUES ('"+serie_added+"', '"+lastadded.id+"')";
+  				con.query(sql, function (err, result) {
+    			if (err) throw err;
+    				console.log("1 record inserted");
+  				});
+
 				res.sendStatus(200);
 			}
 			else{
