@@ -17,7 +17,7 @@ var port = process.env.PORT || 5000;
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "192.168.1.74",
+  host: "192.168.50.4",
   user: "sama",
   password: "somepsswrd",
   database: "tvdb"
