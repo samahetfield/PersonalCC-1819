@@ -22,6 +22,7 @@ var con = mysql.createConnection({
   password: "somepsswrd",
   database: "tvdb"
 });
+
     var app = flicker();
     app
         .add({
