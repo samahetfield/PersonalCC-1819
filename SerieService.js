@@ -106,13 +106,7 @@ app
 			
 			if(favs > favs_ant){
 				client.connect();
-				await client.query("INSERT INTO series(id, nombre) VALUES("+lastadded.id+", '"+serie_added+"');")
-    			.then(response => {
-        			console.log(response.rows);
-    			})
-    			.catch(err => {
-    				console.log(err);
-    			});
+				client.query("INSERT INTO series(id, nombre) VALUES($1, $2)", [lastadded.id, serie_added]);
 
 
     			client.end();
