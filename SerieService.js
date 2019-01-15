@@ -13,9 +13,6 @@ const infoSerie = require('./infoSerie');
 
 var port = process.env.PORT || 5000;
 
-
-var mysql = require('mysql');
-
 const { Client } = require('pg');
 
 const connectionData = {
