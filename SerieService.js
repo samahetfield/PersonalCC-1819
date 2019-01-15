@@ -17,7 +17,7 @@ const { Client } = require('pg');
 
 const connectionData = {
   user: 'postgres',
-  host: '40.78.84.19',
+  host: '10.0.0.5',
   database: 'postgres',
   password: 'psswrd',
   port: 5432,
@@ -106,18 +106,20 @@ app
 			
 			if(favs > favs_ant){
 				client.connect();
-				client.query("INSERT INTO series(id, nombre) VALUES("+lastadded.id+", '"+serie_added+"');")
+				await client.query("INSERT INTO series(id, nombre) VALUES("+lastadded.id+", '"+serie_added+"');")
     			.then(response => {
         			console.log(response.rows);
-        			client.end();
     			})
     			.catch(err => {
     				console.log(err);
-        			client.end();
-    			})
+    			});
+
+
+    			client.end();
 				res.sendStatus(200);
 			}
 			else{
+				client.end();
 				res.sendStatus(404);
 			}
 
