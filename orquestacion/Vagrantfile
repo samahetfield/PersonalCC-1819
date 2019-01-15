@@ -1,0 +1,78 @@
+# Require the Azure provider plugin
+require 'vagrant-azure'
+
+# Create and configure the Azure VMs
+Vagrant.configure('2') do |config|
+
+  # Use dummy Azure box
+  config.vm.box = 'azure-dummy'
+
+  # Specify SSH key
+  config.ssh.private_key_path = '~/.ssh/id_rsa'
+
+
+
+  	#Configuramos la primera máquina virtual, será la que tendrá almacenado el servicio
+	config.vm.define 'databaseS' do |subconfig|
+	    # Configure the Azure provider
+	    subconfig.vm.provider 'azure' do |az, override|
+
+	      # Pull Azure AD service principal information from environment variables
+	      az.tenant_id = ENV['AZURE_TENANT_ID']
+	      az.client_id = ENV['AZURE_CLIENT_ID']
+	      az.client_secret = ENV['AZURE_CLIENT_SECRET']
+	      az.subscription_id = ENV['AZURE_SUBSCRIPTION_ID']
+
+
+	      #Indicamos el nombre de la máquina
+	      az.vm_name = 'database'
+	      # Indicamos el tamaño de la máquina en azure
+	      az.vm_size = 'Standard_B1s'
+	      # Damos la imagen que queremos utilizar
+	      az.vm_image_urn = 'Canonical:UbuntuServer:18.04-LTS:latest'
+	      #Indicamos el grupo de recursos a utilizar
+	      az.resource_group_name = 'vagrant'
+	      # Indicamos el nombre del recurso de red virtual
+	      az.virtual_network_name="proyectoCC"
+	      az.tcp_endpoints='5432'
+	    end 
+
+		#Provisionamos con el playbook realizado para esta máquina
+	    subconfig.vm.provision "ansible" do |ansible|
+	    	ansible.playbook = "postgre.yml"
+	    end
+	
+	end
+
+  	#Configuramos la primera máquina virtual, será la que tendrá almacenado el servicio
+	config.vm.define 'servicioS' do |subconfig|
+		
+	    # Configure the Azure provider
+	    subconfig.vm.provider 'azure' do |az, override|
+
+	      # Pull Azure AD service principal information from environment variables
+	      az.tenant_id = ENV['AZURE_TENANT_ID']
+	      az.client_id = ENV['AZURE_CLIENT_ID']
+	      az.client_secret = ENV['AZURE_CLIENT_SECRET']
+	      az.subscription_id = ENV['AZURE_SUBSCRIPTION_ID']
+
+	      #Indicamos el nombre de la máquina
+	      az.vm_name = 'vagrant1'
+	      # Indicamos el tamaño de la máquina en azure
+	      az.vm_size = 'Standard_B1s'
+	      # Damos la imagen que queremos utilizar
+	      az.vm_image_urn = 'Canonical:UbuntuServer:18.04-LTS:latest'
+	      #Indicamos el grupo de recursos a utilizar
+	      az.resource_group_name = 'vagrant'
+	      # Indicamos el nombre del recurso de red virtual
+	      az.virtual_network_name="proyectoCC"
+	      az.tcp_endpoints=['80', '5432']
+	    end 
+
+		#Provisionamos con el playbook realizado para esta máquina
+	    subconfig.vm.provision "ansible" do |ansible|
+	    	ansible.playbook = "ansible.yml"
+	    end
+
+	end
+end # Vagrant.configure
