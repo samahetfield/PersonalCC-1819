@@ -16,12 +16,16 @@ var port = process.env.PORT || 5000;
 
 var mysql = require('mysql');
 
-var con = mysql.createConnection({
-  host: "10.0.0.5",
-  user: "root",
-  password: "",
-  database: "tvdb"
-});
+const { Client } = require('pg');
+
+const connectionData = {
+  user: 'postgres',
+  host: '192.168.1.91',
+  database: 'postgres',
+  password: 'psswrd',
+  port: 5432,
+}
+const client = new Client(connectionData);
 
     var app = flicker();
     app
@@ -104,12 +108,16 @@ app
 
 			
 			if(favs > favs_ant){
-				var sql = "INSERT INTO usuarios (name, id) VALUES ('"+serie_added+"', '"+lastadded.id+"')";
-  				con.query(sql, function (err, result) {
-    			if (err) throw err;
-    				console.log("1 record inserted");
-  				});
-
+				client.connect();
+				client.query("INSERT INTO series(id, nombre) VALUES("+lastadded.id+", '"+serie_added+"');")
+    			.then(response => {
+        			console.log(response.rows);
+        			client.end();
+    			})
+    			.catch(err => {
+    				console.log(err);
+        			client.end();
+    			})
 				res.sendStatus(200);
 			}
 			else{
