@@ -1,13 +1,13 @@
-# Require the Azure provider plugin
+# Require plugin de Azure
 require 'vagrant-azure'
 
-# Create and configure the Azure VMs
+# Crear y configurar Azure VMs
 Vagrant.configure('2') do |config|
 
-  # Use dummy Azure box
+  # Usasr dummy Azure box
   config.vm.box = 'azure-dummy'
 
-  # Specify SSH key
+  # Specificar SSH key
   config.ssh.private_key_path = '~/.ssh/id_rsa'
 
 

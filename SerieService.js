@@ -130,6 +130,8 @@ app
 			var index = sc.deleteserie(serie_added);
 
 			if(index > -1){
+				client.connect();
+				client.query("DELETE FROM serires WHERE nombre='"+serie_added+"';");
 				res.sendStatus(200);
 			}
 			else{

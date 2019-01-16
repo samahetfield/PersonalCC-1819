@@ -1,5 +1,71 @@
 # Hito 5: Orquestación
 
+## Orquestación
+
+La orquestación de las dos máquinas virtuales se ha realizado con Vagrant y al estar utilizando Azure para alojar estas máquinas virtuales, lo vamos a ver reflejado en el Vagrantfile, ya que tendremos que indicarlo como proveedor.
+Como se indica en el [Github de Azure](https://github.com/Azure/vagrant-azure) correspondente a Vagrant, lo primero que tendremos que hacer será hacer login en nuestra cuenta de azure y crear un Active Directory con acceso a la suscripción activa que tengamos con el comando ``` az ad sp create-for-rbac ```.
+En la siguiente imagen vemos la salida del anterior comando:
+![Crear Active Directory](./imagenes/hito5/createAD.png)
+
+Hecho el login y creado el Active Directory, pasaremos a exportar las variables que usaremos en el Vagrantfile, como son: 
+- AZURE_TENANT_ID
+- AZURE_CLIENT_ID
+- AZURE_CLIENT_SECRET
+- AZURE_SUBSCRIPTION_ID
+
+
+Antes de comenzar con el Vagrantfile, crearemos una máquina de Vagrant con el siguiente comando:
+	
+	vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
+
+Nuestro Vagrantfile tendrá que orquestar dos máquinas virtuales, una que contendrá el servicio y otra la Base de datos, por lo que será necesario que ambas máquinas se comuniquen entre sí.
+![Inicio Vagrantfile](./imagenes/hito5/vagrant1.png)
+
+Se ha ido usando este [tutorial](https://blog.scottlowe.org/2017/12/11/using-vagrant-with-azure/) para seguir los pasos necesarios para comenzar a crear el primer Vagrantfile con una máquina.
+
+En la anterior imagen vemos la primera parte del Vagrantfile.
+En ella se pueden diferenciar cuatro principales partes, cada una correspondiente a una línea:
+- La primera línea corresponderá con importar el plugin de azure.
+- La segunda línea será para comenzar el Vagrantfile e indicar la versión de Vagrant que deseamos utilizar.
+- La tercera línea para indicar la "dummy-box" de Azure que vamos a utilizar, que previamente hemos creado.
+- La cuarta será para indicar la ruta en la que se encuentren las claves SSH.
+
+Indicadas estas cuatro partes, se va a proceder a crear y a configurar las dos máquinas virtuales que vamos a necesitar, para ello, se ha seguido este [tutorial](https://www.vagrantup.com/docs/multi-machine/) donde se nos explica cómo configurar varias máquinas en un mismo Vagrantfile.
+
+![VVM1](./imagenes/hito5/vagrantVM1.png)
+
+En la imagen anterior podemos ver la configuración de la primera máquina virtual que vamos a crear.
+En ella tendremos que configurar que el proveedor que vamos a utilizar será Azure, así que lo indicamos con la orden siguiente:
+	
+	subconfig.vm.provider 'azure' do |az, override|
+
+Posteriormente tendremos que indicar las variables que exportamos al principio del trabajo, correspondientes a nuestra cuenta y nuestro Active Directory.
+
+Las siguientes líneas, van a corresponder con la configuración de nuestra máquina virtual, en la que iremos indicando el nombre de la máquina, el tamaño, la imagen que correrá y el grupo de recursos.
+
+Antes de salir de la configuración de Azure, tenemos las dos últimas líneas, que son las siguientes:
+
+	az.virtual_network_name="proyectoCC"
+	az.tcp_endpoints='5432'
+
+Esto se ha consultado en el [Github de Azure](https://github.com/Azure/vagrant-azure) donde nos indican que podremos crear una red virtual con ``` virtual_network_name ``` para que ambas máquinas se comuniquen entre sí y seguidamente abrimos los puertos necesarios, en este caso, como es el de la base de datos, sólamente abriremos el puerto de PostgreSQL que es el 5432.
+
+Al crear esta red virtual, Azure asigna una IP privada a cada máquina que pertenezca a esta red, en el caso de la primera correspondiente a la base de datos será 10.0.0.5 y la siguiente será 10.0.0.4.
+
+
+Tras esto, llegamos a la parte de provisión, donde indicaremos que usaremos Ansible para la provisión y el [playbook](https://github.com/samahetfield/PersonalCC-1819/blob/master/orquestacion/postgre.yml) que debe utilizar.
+
+La configuración de la segunda máqunia es exactamente igual que lo que se ha visto, así que no entraremos en mucho detalle sobre ella.
+
+![VVM2](./imagenes/hito5/vagrantVM2.png)
+
+Lo único a destacar es que como esta segunda máquina es la del servicio, abriremos el puerto 80 para que se pueda acceder desde el navegador con la dirección IP que nos crea Azure.
+
+Visto el Vagrantfile vamos a ver las salidas de la ejecución del mismo y comprobar que funciona correctamente.
+
+
+
+
 ## Nueva funcionalidad añadida
 
 Para esta entrega se han añadido nuevas funcionalidades a la aplicación, para irnos acercando a la entrega final.
@@ -25,5 +91,13 @@ Por lo tanto, haciendo uso de la API vamos a coger el nombre de la serie, su ID,
 Esta función requiere que le pasemos el ID de la serie de la que queremos sus capítulos, que previamente habremos seleccionado del JSON que se nos proporciona con la primera función que vimos como era **getSeriesByName**.
 
 
-Seguidamente, se le añade una segunda funcionalidad y es el uso de una base de datos **mysql**. Esta base de datos se va a encontrar almacenada en una máquina virtual diferente a la del servicio y que nos almacenará los nombres y el id de las series que el usuario vaya añadiendo a sus favoritas.
+Seguidamente, se le añade una segunda funcionalidad y es el uso de una base de datos **PostgreSQL**. Esta base de datos se va a encontrar almacenada en una máquina virtual diferente a la del servicio y que nos almacenará los nombres y el id de las series que el usuario vaya añadiendo a sus favoritas.
+Cuando queramos insertar una serie a la tabla de series que crearemos en el [playbook correspondiente](https://github.com/samahetfield/PersonalCC-1819/blob/master/orquestacion/postgre.yml), simplemente tendremos que realizar una **query** del siguiente tipo:
 
+	client.query("INSERT INTO series(id, nombre) VALUES($1, $2)", [lastadded.id, serie_added]);
+
+Donde el objeto **cliente** previamente se habrá conectado a la base de datos.
+
+## Comprobación de mi orquestación
+
+## Comprobación de la orquestación de un compañero
