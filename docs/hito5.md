@@ -13,6 +13,9 @@ Hecho el login y creado el Active Directory, pasaremos a exportar las variables 
 - AZURE_CLIENT_SECRET: Correspondiente al password devuelto al crear el Active Directory.
 - AZURE_SUBSCRIPTION_ID: Correspondiente al ID de nuestra subscripción.
 
+
+Para obtener el id de la subscripción, si ejecutamos el comando ``` az account show ``` nos mostrará la subscripción que tenemos activa y podremos obtener de esta forma el ID de la misma para exportarlo.
+
 Para exportarlas haremos lo siguiente con cada una de ellas:
 - export AZURE_TENANT_ID="........."
 - export AZURE_CLIENT_ID="........."
@@ -22,7 +25,7 @@ Para exportarlas haremos lo siguiente con cada una de ellas:
 
 Antes de comenzar con el Vagrantfile, crearemos una máquina de Vagrant con el siguiente comando:
 	
-	vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
+	vagrant box add azure-dummy https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
 
 Nuestro Vagrantfile tendrá que orquestar dos máquinas virtuales, una que contendrá el servicio y otra la Base de datos, por lo que será necesario que ambas máquinas se comuniquen entre sí.
 ![Inicio Vagrantfile](./imagenes/hito5/Vagrant1.png)
@@ -37,6 +40,12 @@ En ella se pueden diferenciar cuatro principales partes, cada una correspondient
 - La cuarta será para indicar la ruta en la que se encuentren las claves SSH.
 
 Indicadas estas cuatro partes, se va a proceder a crear y a configurar las dos máquinas virtuales que vamos a necesitar, para ello, se ha seguido este [tutorial](https://www.vagrantup.com/docs/multi-machine/) donde se nos explica cómo configurar varias máquinas en un mismo Vagrantfile.
+
+Para ejecutar el Vagrantfile, solamente debemos ejecutar el comando:
+	
+	vagrant up --no-parallel
+
+De esta forma comenzará a ejecutarse el Vagrantfile.	
 
 ![VVM1](./imagenes/hito5/vagrantVM1.png)
 
@@ -169,3 +178,7 @@ Una vez ejecutado el Vagrantfile y terminada la provisión de las máquinas, acc
 
 ![Salida 2 de Adrián](./imagenes/hito5/statusOKAdri.png)
 
+
+## Comprobación de mi orquestación realizada por un compañero
+
+Mi orquestación ha sido comprobada por el compañero Adrián de la Torre Rodríguez y podemos acceder a esta comprobación desde el siguiente [enlace](https://github.com/adritake/CC_UGR_Personal/blob/master/docs/Orquestacion.md#correcci%C3%B3n-de-un-compa%C3%B1ero);
