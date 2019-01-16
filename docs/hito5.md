@@ -7,11 +7,17 @@ Como se indica en el [Github de Azure](https://github.com/Azure/vagrant-azure) c
 En la siguiente imagen vemos la salida del anterior comando:
 ![Crear Active Directory](./imagenes/hito5/createAD.png)
 
-Hecho el login y creado el Active Directory, pasaremos a exportar las variables que usaremos en el Vagrantfile, como son: 
-- AZURE_TENANT_ID
-- AZURE_CLIENT_ID
-- AZURE_CLIENT_SECRET
-- AZURE_SUBSCRIPTION_ID
+Hecho el login y creado el Active Directory, pasaremos a exportar las variables de entorno que usaremos en el Vagrantfile, como son: 
+- AZURE_TENANT_ID: Correspondiente al tenant devuelto al crear el Active Directory.
+- AZURE_CLIENT_ID: Correspondiente al appID devuelto al crear el Active Directory.
+- AZURE_CLIENT_SECRET: Correspondiente al password devuelto al crear el Active Directory.
+- AZURE_SUBSCRIPTION_ID: Correspondiente al ID de nuestra subscripción.
+
+Para exportarlas haremos lo siguiente con cada una de ellas:
+- export AZURE_TENANT_ID="........."
+- export AZURE_CLIENT_ID="........."
+- export AZURE_CLIENT_SECRET="........."
+- export AZURE_SUBSCRIPTION_ID="........."
 
 
 Antes de comenzar con el Vagrantfile, crearemos una máquina de Vagrant con el siguiente comando:
@@ -19,7 +25,7 @@ Antes de comenzar con el Vagrantfile, crearemos una máquina de Vagrant con el s
 	vagrant box add azure https://github.com/azure/vagrant-azure/raw/v2.0/dummy.box --provider azure
 
 Nuestro Vagrantfile tendrá que orquestar dos máquinas virtuales, una que contendrá el servicio y otra la Base de datos, por lo que será necesario que ambas máquinas se comuniquen entre sí.
-![Inicio Vagrantfile](./imagenes/hito5/vagrant1.png)
+![Inicio Vagrantfile](./imagenes/hito5/Vagrant1.png)
 
 Se ha ido usando este [tutorial](https://blog.scottlowe.org/2017/12/11/using-vagrant-with-azure/) para seguir los pasos necesarios para comenzar a crear el primer Vagrantfile con una máquina.
 
@@ -112,5 +118,54 @@ Cuando queramos insertar una serie a la tabla de series que crearemos en el [pla
 
 Donde el objeto **cliente** previamente se habrá conectado a la base de datos.
 
+Para la conexión a la base de datos, se ha seguido este [tutorial](https://ed.team/blog/como-usar-bases-de-datos-postgres-con-nodejs).
+
+Con el siguiente código, indicaremos el usuario, la IP a la que conectarse que como hemos visto anteriormente, la de nuestra Base de datos es la IP privada 10.0.0.5, la base de datos a usar, la contraseña del usuario y el puerto.
+Postgresql nos crea por defecto un usuario llamado **postgres** sin contraseña, pero es necesario indicarle una contraseña si quieríamos conectarnos, por eso, en el Playbook cuando instalamos PostgreSQL, modificamos el usuario añadiendo una contraseña. El puerto de PostgreSQL es el 5432 y la base de datos por defecto creada también se llama postgres.
+
+	const connectionData = {
+		user: 'postgres',
+		host: '10.0.0.5',
+		database: 'postgres',
+		password: 'psswrd',
+		port: 5432,
+	}
+
+
+Por defecto, PostgreSQL no acepta las conexiones externas, por lo que es necesario hacer algunos cambios en sus archivos de configuración para que pueda recibir las peticiones desde una máquina remota.
+Para ello en el playbook, se realizan estos cambios para que una vez provisionado esté todo correctamente funcionando.
+
+Haciendo uso del comando **sed** de Ubuntu, así como de algunas páginas que me ayudaran como esta de [askubuntu](https://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands) o [esta otra](https://www.cyberciti.biz/faq/how-to-use-sed-to-find-and-replace-text-in-files-in-linux-unix-shell/), podremos modificar líneas de código en estos archivos. 
+
+	sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" /etc/postgresql/10/main/postgresql.conf
+
+En esta línea de código podemos ver que lo que hacemos es reemplazar la línea de código comentada de ``` #listen_addresses = 'localhost' ``` por una la línea de código siguiente ``` listen_addresses = '*' ``` para que no sólamente escuche de localhost. Esto se modifica en el archivo que se encuentra en la ruta especificada.
+
+También es necesario modificar otro archivo y usaremos la siguiente orden:
+
+	sed -i "s/127.0.0.1\/32/0.0.0.0\/0/" /etc/postgresql/10/main/pg_hba.conf
+
+En esta orden modificamos que en lugar de permitir únicamente la IP 127.0.0.1 con puerto 32, lo abrimos para que acepte cualquier IP.
+
 
 ## Comprobación de la orquestación de un compañero
+
+Se ha comprobado la orquestación del compañero Adrián de la Torre Rodríguez.
+Para ello he descargado los ficheros existentes en su carpeta de orquestación y se ha ejecutado el Vagrantfile.
+
+Se han seguido las instrucciones que se nos indican en su [documentación](https://github.com/adritake/CC_UGR_Personal/blob/master/docs/Orquestacion.md), donde vemos que es necesario exportar a un archivo JSON las variables que usaremos de Azure, así como el ID de nuestra subscripción a un archivo TXT.
+
+Si ejecutamos el Vagrantfile tal y como lo descargamos, nos dará un error diciendo que hay un DNS con ese nombre, por lo que tendremos que cambiar el nombre de las máquinas para que no haya conflictos.
+
+![Salida 1 de Adrián](./imagenes/hito5/comprobacionAdri1.png)
+
+![Salida 2 de Adrián](./imagenes/hito5/comprobacionAdri2.png)
+
+![Salida 3 de Adrián](./imagenes/hito5/comprobacionAdri3.png)
+
+
+Una vez ejecutado el Vagrantfile y terminada la provisión de las máquinas, accederemos a la IP pública de la máquina que aloja el servicio y que tenemos en Azure para comprobar que funciona correctamente.
+
+
+![Salida 2 de Adrián](./imagenes/hito5/statusOKAdri.png)
+
