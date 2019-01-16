@@ -181,4 +181,4 @@ Una vez ejecutado el Vagrantfile y terminada la provisión de las máquinas, acc
 
 ## Comprobación de mi orquestación realizada por un compañero
 
-Mi orquestación ha sido comprobada por el compañero Adrián de la Torre Rodríguez y podemos acceder a esta comprobación desde el siguiente [enlace](https://github.com/adritake/CC_UGR_Personal/blob/master/docs/Orquestacion.md#correcci%C3%B3n-de-un-compa%C3%B1ero);
+Mi orquestación ha sido comprobada por el compañero Adrián de la Torre Rodríguez y podemos acceder a esta comprobación desde el siguiente [enlace](https://github.com/adritake/CC_UGR_Personal/blob/master/docs/Orquestacion.md#correcci%C3%B3n-de-un-compa%C3%B1ero).

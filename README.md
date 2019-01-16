@@ -22,7 +22,10 @@ Para realizar este proyecto utilizaremos una arquitectura basada en microservici
 
 - Microservicio de consulta a la API: Este microservicio se encargará de leer los datos de la API TvDB. 
 
-- Microservicio de información: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando MySQL.
+- Microservicio de información: Este microservicio será el encargado de tener la base de datos en la que almacenar la información del usuario usando PostgreSQL.
+
+Se diferenciarán dos máquinas, una con el servicio web desplegado y otra con la base de datos. Podremos acceder a la ḿáquina con el servicio desplegado y sobre ella hacer las consultas necesarias.
+
 
 # Despliegue en el PaaS
 Se ha seleccionado Heroku para el despliegue de nuestra aplicación. Hemos seleccionado esta plataforma frente a otras gracias a estar más familiarizados con ella ya que se ha trabajado con ella en los ejercicios del tema 3, así como por su suscripción gratuita.
@@ -59,6 +62,18 @@ Se ha realizado un [script](https://github.com/samahetfield/PersonalCC-1819/blob
 La documentación detallada de todas las tareas realizadas para la automatización se encuentran en este [documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito4.md).
 
 MV2: 13.93.115.181
+
+
+# Orquestación
+
+La orquestación de las dos máquinas virtuales utilizadas para este proyecto se realizará con **Vagrant**. Podremos diferenciar claramente dos máquinas y toda la documentación relacionada con la orquestación la encontraremos en el siguiente [documento](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito5.md).
+
+He comprobado la orquestación de mi compañero Adrián de la Torre Rodríguez, la cual se puede ver en el siguiente [enlace](https://github.com/samahetfield/PersonalCC-1819/blob/master/docs/hito5.md).
+
+Mi orquestación ha sido comprobada por Adrián de la Torre Rodríguez y podemos verla en el siguiente [enlace](https://github.com/adritake/CC_UGR_Personal/blob/master/docs/Orquestacion.md#correcci%C3%B3n-de-un-compa%C3%B1ero).
+
+
+Despliegue Vagrant: 104.42.112.128
 
 # Licencia
 Este software se encontrará sujeto a la licencia GNU General Public License v3.0
