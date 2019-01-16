@@ -52,6 +52,8 @@ Esto se ha consultado en el [Github de Azure](https://github.com/Azure/vagrant-a
 
 Al crear esta red virtual, Azure asigna una IP privada a cada máquina que pertenezca a esta red, en el caso de la primera correspondiente a la base de datos será 10.0.0.5 y la siguiente será 10.0.0.4.
 
+![IPs](./imagenes/hito5/IPsPrivadas.png)
+
 
 Tras esto, llegamos a la parte de provisión, donde indicaremos que usaremos Ansible para la provisión y el [playbook](https://github.com/samahetfield/PersonalCC-1819/blob/master/orquestacion/postgre.yml) que debe utilizar.
 
@@ -63,7 +65,15 @@ Lo único a destacar es que como esta segunda máquina es la del servicio, abrir
 
 Visto el Vagrantfile vamos a ver las salidas de la ejecución del mismo y comprobar que funciona correctamente.
 
+![Salida1](./imagenes/hito5/salidaVagrant1.png)
 
+En esta imagen vemos cómo se despliega la primera máquina virtual y comienza el provisionamiento con Ansible. Ha sido necesario ejecutar el comando con ``` --no-parallel ``` ya que en paralelo fallaba el despliegue.
+
+![Salida2](./imagenes/hito5/salidaVagrant2.png)
+
+Terminado el provisionamiento de ambas máquinas, accederemos a la IP para ver que se puede acceder por el puerto 80 y que todo está correctamente.
+
+![IPPublica](./imagenes/hito5/IPPublica.png)
 
 
 ## Nueva funcionalidad añadida
@@ -90,6 +100,10 @@ Por lo tanto, haciendo uso de la API vamos a coger el nombre de la serie, su ID,
 
 Esta función requiere que le pasemos el ID de la serie de la que queremos sus capítulos, que previamente habremos seleccionado del JSON que se nos proporciona con la primera función que vimos como era **getSeriesByName**.
 
+A continuación vemos que añadiendo una serie, nos almacenará el ID, el nombre y la lista de capítulos de la serie.
+
+![Arrow añadida](./imagenes/hito5/Arrow.png)
+
 
 Seguidamente, se le añade una segunda funcionalidad y es el uso de una base de datos **PostgreSQL**. Esta base de datos se va a encontrar almacenada en una máquina virtual diferente a la del servicio y que nos almacenará los nombres y el id de las series que el usuario vaya añadiendo a sus favoritas.
 Cuando queramos insertar una serie a la tabla de series que crearemos en el [playbook correspondiente](https://github.com/samahetfield/PersonalCC-1819/blob/master/orquestacion/postgre.yml), simplemente tendremos que realizar una **query** del siguiente tipo:
@@ -98,6 +112,5 @@ Cuando queramos insertar una serie a la tabla de series que crearemos en el [pla
 
 Donde el objeto **cliente** previamente se habrá conectado a la base de datos.
 
-## Comprobación de mi orquestación
 
 ## Comprobación de la orquestación de un compañero
